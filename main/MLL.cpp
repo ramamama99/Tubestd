@@ -22,7 +22,7 @@ void menu(){
 
 
         }
-void createListAkun(ListAkun &L){
+void createListAkun(listAkun &L){
     L.first = nullptr;
 }
 
@@ -37,7 +37,7 @@ bool isEmptyStatus(adrAkun p){
 
 adrAkun createElemenAkun(string namaAkun,string bio,string email){
     adrAkun p = new elmAkun;
-    p->info.namaAkun = namaAkun;
+    p->info.nama = namaAkun;
     p->info.bio = bio;
     p->info.email = email;
     p->next = nullptr;
@@ -61,10 +61,10 @@ void addAkun(listAkun &L,adrAkun p){
         L.first = p;
     }else{
         x = L.first;
-        while(current ->next!= nullptr){
+        while(x ->next!= nullptr){
             x = x->next;
         }
-        x->next = p
+        x->next = p;
     }
 }
 
@@ -87,7 +87,7 @@ void addStatus(adrAkun p,adrStatus q){
 adrAkun searchAkunByNama(listAkun L,string namaAkun){
     adrAkun p = L.first;
     while(p!= nullptr){
-        if(p->info.namaAkun == namaAkun){
+        if(p->info.nama == namaAkun){
             return p;
         }
         p = p->next;

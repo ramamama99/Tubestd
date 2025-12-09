@@ -4,7 +4,7 @@
 using namespace std;
 
 typedef struct elmAkun *adrAkun;
-typedef struct elmStatus *adrAkun;
+typedef struct elmStatus *adrStatus;
 
 struct akun{
     string nama;
@@ -35,27 +35,23 @@ struct elmStatus{
 };
 
 
-void menu()
-void createListAkun(ListAkun &L)
-bool isEmptyAkun(listAkun L)
-bool isEmptyStatus(adrAkun p){
-adrAkun createElemenAkun(string namaAkun,string bio,string email){
-adrStatus createElemenStatus(string status){
-void addAkun(listAkun &L,adrAkun p){
-void addStatus(adrAkun p,adrStatus q){
-adrAkun searchAkunByNama(listAkun L,string namaAkun){
-adrAkun searchAkunByEmail(listAkun L,string email){
+void menu();
+void createListAkun(listAkun &L);
+bool isEmptyAkun(listAkun L);
+bool isEmptyStatus(adrAkun p);
+adrAkun createElemenAkun(string namaAkun,string bio,string email);
+adrStatus createElemenStatus(string status);
+void addAkun(listAkun &L,adrAkun p);
+void addStatus(adrAkun p,adrStatus q);
+adrAkun searchAkunByNama(listAkun L,string namaAkun);
+adrAkun searchAkunByEmail(listAkun L,string email);
 //searchAkunByStatus
-void deleteBio(adrAkun p){
+void deleteBio(adrAkun p);
 //delete status
-int countAkun(listAkun L){
+int countAkun(listAkun L);
 
 
 
-<<<<<<< HEAD
-=======
-typedef halomok int
-test lagi
->>>>>>> d782fa0602907ddb5d173d7fb03db26bd5b1783e
+
 
 #endif // MLL_H_INCLUDED

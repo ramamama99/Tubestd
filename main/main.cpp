@@ -24,7 +24,7 @@ int main()
 
     addAkun(L,s1);
     addAkun(L,s2);
-    addAkun(L,s3;
+    addAkun(L,s3);
     addAkun(L,s4);
     addAkun(L,s5);
     addAkun(L,s6);
