@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1765116776 source:d:\tubestd\main\mll.cpp
+	<iostream>
+	"MLL.h"
+
+1765180901 source:d:\tubestd\main\main.cpp
+	<iostream>
+	"MLL.h"
+
+1765113971 d:\tubestd\main\mll.h
+	<iostream>
+
