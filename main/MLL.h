@@ -52,5 +52,10 @@ int countAkun(listAkun L){
 
 
 
+<<<<<<< HEAD
+=======
+typedef halomok int
+test lagi
+>>>>>>> d782fa0602907ddb5d173d7fb03db26bd5b1783e
 
 #endif // MLL_H_INCLUDED
