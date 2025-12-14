@@ -19,9 +19,7 @@ void menu(){
         cout << "0. Keluar" << endl;
         cout << "Pilih Menu : ";
 
-
-
-        }
+}
 void createListAkun(listAkun &L){
     L.first = nullptr;
 }
@@ -46,8 +44,8 @@ adrAkun createElemenAkun(string namaAkun,string bio,string email){
 }
 
 adrStatus createElemenStatus(string status){
-    adrStatus q = new elmStatus;
-   // q->info.status =
+   adrStatus q = new elmStatus;
+   q->info.status = status;
    q->next = nullptr;
    q->prev = nullptr;
    return q;
@@ -106,7 +104,92 @@ adrAkun searchAkunByEmail(listAkun L,string email){
     return nullptr;
 }
 
-//searchAkunByStatus
+void searchAllAkunByStatus(listAkun L, string status) {
+    adrAkun p = L.first;
+     bool found = false;
+      while (p != nullptr) {
+        adrStatus s = p->firstStatus;
+        while (s != nullptr) {
+            if (s->info.status == status) {
+                cout << "Status \"" << status << "\" ditemukan pada akun: " << p->info.username << endl;
+                found = true;
+                break;
+            }
+            s = s->next;
+        }
+        p = p->next;
+      }
+      if(!= found){
+        cout<<"tidak ada akun yang memiliki status "<<status<<"\n";
+      }
+}
+
+void deleteFirstAkun(listAkun &L, adrAkun &p){
+    if (L.first != nullptr){
+        p = L.first;
+        L.first = p->next;
+        p->next = nullptr;
+    }
+}
+
+void deleteAfterAkun(adrAkun prec, adrAkun &p){
+    if (prec != nullptr && prec->next != nullptr){
+        p = prec->next;
+        prec->next = p->next;
+        p->next = nullptr;
+    }
+}
+
+void deleteLastAkun(listAkun &L, adrAkun &p){
+    if (L.first != nullptr){
+
+        if (L.first->next == nullptr){
+            p = L.first;
+            L.first = nullptr;
+        }
+
+        else {
+            adrAkun q = L.first;
+            while (q->next->next != nullptr){
+                q = q->next;
+            }
+            p = q->next;
+            q->next = nullptr;
+        }
+    }
+}
+
+void deleteAkunByNama(listAkun &L, string x){
+    adrAkun p = L.first;
+    adrAkun q = nullptr;
+    adrAkun del;
+    bool found = false;
+
+    while (p != nullptr && !found){
+        if (p->info.nama == x){
+            found = true;
+        } else {
+            q = p;
+            p = p->next;
+        }
+    }
+
+    if (found){
+        if (p == L.first){
+            deleteFirstAkun(L, del);
+        }
+        else if (p->next == nullptr){
+            deleteLastAkun(L, del);
+        }
+        else {
+            deleteAfterAkun(q, del);
+        }
+    }
+    else {
+        cout << "akun tidak ditemukan";
+    }
+}
+
 
 void deleteBio(adrAkun p){
     if (p!= nullptr){
@@ -116,7 +199,42 @@ void deleteBio(adrAkun p){
 
 }
 
-//delete status
+void updateBio(adrAkun p, string bioBaru) {
+    if (p != nullptr) {
+        p->info.bio = bioBaru;
+    }
+}
+
+void updateEmail(adrAkun p, string emailBaru) {
+    if (p != nullptr) {
+        p->info.email = emailBaru;
+    }
+}
+
+
+void deleteStatusByOption(adrAkun p, string x){
+    adrStatus a;
+    a = p->firstStatus;
+    while (a != nullptr){
+        if (a->info == x){
+            if(a == p->firstStatus){
+                p->firstStatus = a->next;
+                if (a->next != nullptr){
+                a->next->prev = nullptr;
+                }
+            } else {
+                a->prev->next = a->next;
+                if (a->next != nullptr){
+                a->next->prev = a->prev;
+                }
+            }
+            a->next = nullptr;
+            a->prev = nullptr;
+        }
+        a = a->next
+}
+}
+
 
 
 int countAkun(listAkun L){
@@ -133,4 +251,119 @@ int countAkun(listAkun L){
     return count;
 
 }
+
+void viewAkunHuruf(listAkun L, string x){
+    adrAkun p = L.first;
+    int counter = 0;
+    while (p != nullptr){
+        if (p->info.nama[0] == x){
+            cout << p->info.nama;
+            counter++;
+        }
+        p = p-> next;
+        cout << counter;
+    }
+}
+
+int countStatus(adrAkun p){
+    s = p->firstStatus;
+    count = 0
+
+    while(s!=null){
+        count = count+1;
+        s = s->next;
+        }
+    return count;
+    }
+
+
+void tampilAkunDenganJumlahStatusTertentu(listAkun L,int jStatus){
+    adrAkun p = L.first;
+    int count;
+    bool ketemu = false;
+      while(p!=nullptr){
+       count = countStatus(p);
+
+       if (count == jStatus){
+        cout<<p->info.nama;
+        ketemu = true;
+       }
+       p = p->next;
+      }
+
+      if(!ketemu){
+        cout<<"Tidak ada akun dengan jumlah status "<<jStatus<<endl;
+      }
+
+
+}
+
+void viewAllAkun(listAkun L){
+    adrAkun p = L.first;
+
+
+    while(p!=nullptr){
+        adrStatus s = p->firstStatus;
+        cout<<"Username : " << p->info.username<<endl;
+        cout<<"Email : " << p->info.email<<endl;
+        cout<<"Bio : " << p->info.bio<<endl;
+
+        if(s == nullptr){
+            cout<<"Status : " << " "<<endl;
+        }
+        while(s!=nullptr){
+            cout <<"Status : " <<s->info.status<<endl;
+            s = s->next;
+        }
+        cout<< " "<<endl;
+        cout<<"--------------------------------------------"<<endl;
+        p = p->next;
+    }
+
+
+}
+
+int lengthAkun(adrAkun q){
+    int panjang;
+    string nama = q->info.nama;
+    panjang = nama.length();
+    return panjang;
+}
+
+adrAkun panjangNama(listAkun L){
+    adrAkun q = L.first;
+    adrAkun p = nullptr;
+    int maxx = -1;
+
+    while (q != nullptr){
+        int panjang = lengthAkun(q);
+        if (panjang > maxx){
+            maxx = panjang;
+            p = q;
+        }
+        q = q->next;
+    }
+    return p;
+}
+
+void pendekNama(listAkun L){
+    adrAkun q = L.first;
+    adrAkun p = nullptr;
+
+    adrAkun z = panjangNama(L);
+    int minn = lengthAkun(z);
+
+    while (q != nullptr){
+        int pendek = lengthAkun(q);
+        if (pendek < minn){
+            minn = pendek;
+            p = q;
+        }
+        q = q->next;
+    }
+    cout<< p->info.nama << endl;
+
+}
+
+
 

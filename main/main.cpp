@@ -7,8 +7,9 @@ int main()
     int pilih;
     listAkun L;
     createListAkun(L);
-    adrAkun p;
+    adrAkun p,n,adk;
     adrStatus q;
+    string username;
 
 
     adrAkun s1 = createElemenAkun("Andi_01","Suka Belajar","Andiandiandi@gmail.com");
@@ -52,10 +53,30 @@ int main()
 
             switch(case_1){
             case 1:
-                cout<<"Program masih dalam tahap pengembangan #1";
+                bool uservalid = false;
+
+                while(!uservalid){
+                    cout<<"Masukkan username";
+                    cin>>username;
+                    n = searchAkunByNama(username);
+                    int c = countstring(username);
+
+                    if p<6{
+                        cout<<"username minimal terdiri dari 6 karakter,silahkan input kembali\n";
+                    }else if (n->info == username){
+                        cout<<"username sudah digunakan,silahkan coba username lain\n";
+                    }else{
+                        adk = createElemenAkun(username,bio,email);
+                        addAkun(L,adk);
+                        cout<<"Akun anda berhasil didaftarkan\n";
+                        valid = true;
+                    }
+
+                }
+
                 break;
             case 2:
-                cout<<"kembang #2";
+                cout<<"Silahkan masukkan bio
             case 3:
                 cout<<"Kembang #3";
             case 4:

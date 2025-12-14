@@ -24,12 +24,8 @@ struct elmAkun{
     adrStatus firstStatus;
 };
 
-struct status{
-
-};
-
 struct elmStatus{
-    status info;
+    string info;
     adrStatus next;
     adrStatus prev;
 };
@@ -45,10 +41,21 @@ void addAkun(listAkun &L,adrAkun p);
 void addStatus(adrAkun p,adrStatus q);
 adrAkun searchAkunByNama(listAkun L,string namaAkun);
 adrAkun searchAkunByEmail(listAkun L,string email);
-//searchAkunByStatus
+void searchAllAkunByStatus(listAkun L, string status);
+void deleteFirstAkun(listAkun &L, adrAkun &p);
+void deleteAfterAkun(adrAkun prec, adrAkun &p);
+void deleteLastAkun(listAkun &L, adrAkun &p);
+void deleteAkunByNama(listAkun &L,string x);
 void deleteBio(adrAkun p);
-//delete status
+void deleteStatusByOption(adrAkun &p, string &x);
 int countAkun(listAkun L);
+void viewAkunHuruf(listAkun L, string x);
+int countStatus(adrAkun p);
+void tampilAkunDenganJumlahStatusTertentu(listAkun L,int jStatus);
+void viewAllAkun(listAkun L);
+int lengthAkun(adrAkun q);
+adrAkun panjangNama();
+void pendekNama();
 
 
 
