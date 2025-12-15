@@ -7,9 +7,12 @@ int main()
     int pilih;
     listAkun L;
     createListAkun(L);
-    adrAkun p,n,adk;
+    adrAkun p,n,adk,hasil;
     adrStatus q;
     string username;
+    string email;
+    string bio;
+    string status;
 
 
     adrAkun s1 = createElemenAkun("Andi_01","Suka Belajar","Andiandiandi@gmail.com");
@@ -23,16 +26,16 @@ int main()
     adrAkun s9 = createElemenAkun("indriw_09",".","Indriri@gmail.com");
     adrAkun s10 = createElemenAkun("JokoSucipto_10","Kosong","Jokjoko@gmail.com");
 
-    addAkun(L,s1);
-    addAkun(L,s2);
-    addAkun(L,s3);
-    addAkun(L,s4);
-    addAkun(L,s5);
-    addAkun(L,s6);
-    addAkun(L,s7);
-    addAkun(L,s8);
-    addAkun(L,s9);
-    addAkun(L,s10);
+    insertSortedAkunByNama(L,s1);
+    insertSortedAkunByNama(L,s2);
+    insertSortedAkunByNama(L,s3);
+    insertSortedAkunByNama(L,s4);
+    insertSortedAkunByNama(L,s5);
+    insertSortedAkunByNama(L,s6);
+    insertSortedAkunByNama(L,s7);
+    insertSortedAkunByNama(L,s8);
+    insertSortedAkunByNama(L,s9);
+    insertSortedAkunByNama(L,s10);
 
     cout << "========================================" << endl;
     cout << "  SELAMAT DATANG di MANAJEMEN AKUN      " << endl;
@@ -47,83 +50,173 @@ int main()
       switch(pilih){
         case 1:
             int case_1;
-            cout<<"Apa yang akan ingin anda lakukan terhadap pengelolaan akun?"<<endl;
+            cout<<"\nApa yang akan ingin anda lakukan terhadap pengelolaan akun?"<<endl;
             cout<<"1.Registrasi\n2.Update Bio\n3.Update Email\n4.Tambah Status\n5.Batal"<< endl;
+            cout<<"Pilih Menu: ";
             cin>>case_1;
 
             switch(case_1){
-            case 1:
+            case 1:{
                 bool uservalid = false;
-
+                bool cekNama = false;
                 while(!uservalid){
-                    cout<<"Masukkan username";
+                    cout <<"------------------------\n";
+                    cout <<"ketentuan registrasi\n";
+                    cout <<"------------------------\n";
+                    cout <<"Nama akun wajib lebih dari 5 karakter\n";
+                    cout <<"Masukkan username: ";
                     cin>>username;
-                    n = searchAkunByNama(username);
-                    int c = countstring(username);
+                    n = searchAkunByNama(L,username);
+                    int c = counterString(username);
 
-                    if p<6{
-                        cout<<"username minimal terdiri dari 6 karakter,silahkan input kembali\n";
-                    }else if (n->info == username){
-                        cout<<"username sudah digunakan,silahkan coba username lain\n";
+
+                    if(n== nullptr){
+                        cekNama = true;
                     }else{
-                        adk = createElemenAkun(username,bio,email);
-                        addAkun(L,adk);
-                        cout<<"Akun anda berhasil didaftarkan\n";
-                        valid = true;
+                        cekNama = false;
                     }
 
-                }
+                    if (c < 6){
+                        cout << "kurang";
+                    } else if (cekNama != true){
+                        cout <<"ganti nama lain";
+                    } else {
+                        cout << "masukan email untuk akun anda: ";
+                        cin >> email;
+                        cout << "masukan bio untuk akun anda (jika tidak ingin menambahkan, silahkan input '-'.): ";
+                        cin >> bio;
 
+                        adk = createElemenAkun(username,bio,email);
+                        insertSortedAkunByNama(L,adk);
+
+                        cout<<"Akun anda berhasil didaftarkan\n";
+                        uservalid = true;
+                    }
+
+
+
+                }
                 break;
-            case 2:
-                cout<<"Silahkan masukkan bio
+
+
+            }case 2:
+                cout << "masukakan username";
+                cin >> username;
+                cout<<"Silahkan masukkan bio yang baru";
+                cin >> bio;
+                updateBio(searchAkunByNama(L, username),bio);
+                break;
             case 3:
-                cout<<"Kembang #3";
+                cout << "masukakan username";
+                cin >> username;
+                cout<<"Silahkan masukkan email yang baru";
+                cin >> email;
+                updateEmail(searchAkunByNama(L, username),email);
+                break;
             case 4:
-                cout<<"kembang #5";
-            case 5:
-                cout<<"Batal";
+                cout << "masukakan username";
+                cin >> username;
+                cout<<"Silahkan masukkan status yang baru";
+                cin >> status;
+                addStatus(searchAkunByNama(L, username), createElemenStatus(status));
+                break;
+
 
             default:
-                cout<<"silahkan input kembali\n";
-
             break;
+
+
             }
             break;
         case 2:
-            cout<<"Show ALL";
+            viewAllAkun(L);
             break;
 
-        case 3:
-            cout<<"Search";
+        case 3:{
+
+            int nomor;
+            string nama;
+            string Email;
+            string Status;
+
+            cout<<"Mau cari akun berdasarkan apa? (1.Nama/2.Email/3.Status)";
+            cout << "Silahkan input nomor pilihan";
+            cin >> nomor;
+            switch(nomor){
+            case 1:
+                cout << "masukan nama yang ingin dicari";
+                cin >> nama;
+                hasil = searchAkunByNama(L, nama);
+                viewAkunTertentu(L,hasil);
+                break;
+            case 2:
+                cout << "masukan email yang ingin dicari";
+                cin >> Email;
+                hasil = searchAkunByEmail(L, Email);
+                viewAkunTertentu(L,hasil);
+                break;
+
+            case 3:
+                cout << "masukan Status yang ingin dicari";
+                cin >> Status;
+                searchAllAkunByStatus(L, Status);
+                break;
+            }
+
             break;
+        }
         case 4:
-            cout<<"Silahkan Masukkan Nama: ";
-
-            // kalo ada namanya nanti bisa diapus
-            // kalo ga ada output nama tidak ada dalam data manajemen akun
+            cout<<"Silahkan Masukkan Nama akun yang ingin diahpus: ";
+            cin >> username;
+            deleteAkunByNama(L, username);
 
             break;
         case 5:
+            cout<<"Silahkan Masukkan Nama akun: ";
+            cin >> username;
+            hasil = searchAkunByNama(L, username);
+            deleteBio(hasil);
+            cout<<"Bio berhasil dihapus";
+
             //menghapus bio
 
             break;
         case 6:
+            cout<<"Silahkan Masukkan Nama akun: ";
+            cin >> username;
+            cout<<"Silahkan Masukkan status yang ingin dihapus: ";
+            cin >> status;
+            hasil = searchAkunByNama(L, username);
+            deleteStatusByOption(hasil, status);
+
             //hapus status
             break;
         case 7:
+            int total;
+            total = countAkun(L);
+            cout<<"Terdapat "<<total<<" Akun pada Manajemen Akun"<<endl;
             //hitung banyak akun
+
             break;
         case 8:
-            //tampilin akun yg diawali huruf tertentu
+            char huruf;
+            cout<<"Silahkan input huruf pertama: ";
+            cin>>huruf;
+            viewAkunHuruf(L,huruf);
             break;
         case 9:
-            //menampilkan akun dengan jumlah status tertentu
+            int jStatus;
+            cout<<"Silahkan input jumlah status: ";
+            cin>>jStatus;
+            tampilAkunDenganJumlahStatusTertentu(L,jStatus);
             break;
         case 10:
-            //menampilkan akun dengan nama akun terpanjang
+            cout<<"Akun dengan Username terpanjang:\n";
+            tampilPanjangNama(L);
             break;
         case 11:
+            cout<<"Akun dengan Username terpendek:\n";
+            tampilPendekNama(L);
             //menampilkan akun dengan nama akun terpendek
             break;
         default:

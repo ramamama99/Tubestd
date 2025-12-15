@@ -4,7 +4,7 @@
 using namespace std;
 
 void menu(){
-    cout << "\n--- Apa yang anda ingin lakukan? ---" << endl;
+    cout << "\n\n--- Apa yang anda ingin lakukan? ---" << endl;
         cout << "1. Kelola Akun (Registrasi/Update Bio/Email/Tambah Status)" << endl;
         cout << "2. Melihat Semua Akun" << endl;
         cout << "3. Mencari Akun" << endl;
@@ -17,7 +17,7 @@ void menu(){
         cout << "10. Menampilkan Akun dengan Nama Terpanjang" << endl;
         cout << "11. Menampilkan Akun dengan Nama Terpendek" << endl;
         cout << "0. Keluar" << endl;
-        cout << "Pilih Menu : ";
+        cout << "Pilih Menu: ";
 
 }
 void createListAkun(listAkun &L){
@@ -45,26 +45,56 @@ adrAkun createElemenAkun(string namaAkun,string bio,string email){
 
 adrStatus createElemenStatus(string status){
    adrStatus q = new elmStatus;
-   q->info.status = status;
+   q->info = status;
    q->next = nullptr;
    q->prev = nullptr;
    return q;
 
 }
 
-void addAkun(listAkun &L,adrAkun p){
-    adrAkun x;
+char lowercase(char c){
+    if (c >= 'A' && c <= 'Z'){
+        return c + 32;
+    }
+    return c;
+}
 
-    if(isEmptyAkun(L)){
-        L.first = p;
-    }else{
-        x = L.first;
-        while(x ->next!= nullptr){
-            x = x->next;
+bool namaLebihKecil(string a, string b){
+    int i = 0;
+    while (a[i] != '\0' && b[i] != '\0'){
+        char ca = lowercase(a[i]);
+        char cb = lowercase(b[i]);
+
+        if (ca < cb){
+           return true;
+        }else if(ca > cb){
+            return false;
         }
-        x->next = p;
+        i++;
+    }
+
+    return a[i] == '\0' && b[i] != '\0';
+}
+
+void insertSortedAkunByNama(listAkun &L, adrAkun p){
+    if (L.first == nullptr){
+        L.first = p;
+    }
+    else if (namaLebihKecil(p->info.nama, L.first->info.nama)){
+        p->next = L.first;
+        L.first = p;
+    }
+    else{
+        adrAkun q = L.first;
+        while (q->next != nullptr &&
+               namaLebihKecil(q->next->info.nama, p->info.nama)){
+            q = q->next;
+        }
+        p->next = q->next;
+        q->next = p;
     }
 }
+
 
 void addStatus(adrAkun p,adrStatus q){
     adrStatus x;
@@ -110,8 +140,11 @@ void searchAllAkunByStatus(listAkun L, string status) {
       while (p != nullptr) {
         adrStatus s = p->firstStatus;
         while (s != nullptr) {
-            if (s->info.status == status) {
-                cout << "Status \"" << status << "\" ditemukan pada akun: " << p->info.username << endl;
+            if (s->info == status) {
+                cout << "Status \"" << status << "\" ditemukan pada akun: " << p->info.nama << endl;
+                cout<<"Email: "<<p->info.email<<endl;
+                cout<<"Bio: "<<p->info.bio<<endl;
+                cout<<" "<<endl;
                 found = true;
                 break;
             }
@@ -119,7 +152,7 @@ void searchAllAkunByStatus(listAkun L, string status) {
         }
         p = p->next;
       }
-      if(!= found){
+      if(!found){
         cout<<"tidak ada akun yang memiliki status "<<status<<"\n";
       }
 }
@@ -193,8 +226,7 @@ void deleteAkunByNama(listAkun &L, string x){
 
 void deleteBio(adrAkun p){
     if (p!= nullptr){
-        p->info.bio = nullptr;
-
+        p->info.bio = "-";
     }
 
 }
@@ -225,14 +257,15 @@ void deleteStatusByOption(adrAkun p, string x){
             } else {
                 a->prev->next = a->next;
                 if (a->next != nullptr){
-                a->next->prev = a->prev;
+                    a->next->prev = a->prev;
                 }
             }
             a->next = nullptr;
             a->prev = nullptr;
+            break;
         }
-        a = a->next
-}
+        a = a->next;
+    }
 }
 
 
@@ -252,13 +285,13 @@ int countAkun(listAkun L){
 
 }
 
-void viewAkunHuruf(listAkun L, string x){
+void viewAkunHuruf(listAkun L, char x){
     adrAkun p = L.first;
     int counter = 0;
     while (p != nullptr){
-        if (p->info.nama[0] == x){
-            cout << p->info.nama;
-            counter++;
+        if (lowercase(p->info.nama[0]) == lowercase(x)){
+            cout << p->info.nama<<endl;
+            counter = counter+1 ;
         }
         p = p-> next;
         cout << counter;
@@ -266,15 +299,24 @@ void viewAkunHuruf(listAkun L, string x){
 }
 
 int countStatus(adrAkun p){
+    adrStatus s;
     s = p->firstStatus;
-    count = 0
+    int  count = 0;
 
-    while(s!=null){
+    while(s!=nullptr){
         count = count+1;
         s = s->next;
         }
     return count;
     }
+
+void viewAkunTertentu(listAkun L,adrAkun p){
+    cout << "-------------------";
+    cout << p->info.nama;
+    cout << p->info.email;
+    cout << p->info.bio;
+    cout << "-------------------";
+}
 
 
 void tampilAkunDenganJumlahStatusTertentu(listAkun L,int jStatus){
@@ -285,7 +327,10 @@ void tampilAkunDenganJumlahStatusTertentu(listAkun L,int jStatus){
        count = countStatus(p);
 
        if (count == jStatus){
-        cout<<p->info.nama;
+        cout<<p->info.nama<<endl;
+        cout<<p->info.email<<endl;
+        cout<<p->info.bio<<endl;
+
         ketemu = true;
        }
        p = p->next;
@@ -304,7 +349,7 @@ void viewAllAkun(listAkun L){
 
     while(p!=nullptr){
         adrStatus s = p->firstStatus;
-        cout<<"Username : " << p->info.username<<endl;
+        cout<<"Username : " << p->info.nama<<endl;
         cout<<"Email : " << p->info.email<<endl;
         cout<<"Bio : " << p->info.bio<<endl;
 
@@ -312,7 +357,7 @@ void viewAllAkun(listAkun L){
             cout<<"Status : " << " "<<endl;
         }
         while(s!=nullptr){
-            cout <<"Status : " <<s->info.status<<endl;
+            cout <<"Status : " <<s->info<<endl;
             s = s->next;
         }
         cout<< " "<<endl;
@@ -321,6 +366,11 @@ void viewAllAkun(listAkun L){
     }
 
 
+}
+int counterString(string username){
+    int panjang;
+    panjang = username.length();
+    return panjang;
 }
 
 int lengthAkun(adrAkun q){
@@ -346,22 +396,49 @@ adrAkun panjangNama(listAkun L){
     return p;
 }
 
-void pendekNama(listAkun L){
+void tampilPanjangNama(listAkun L){
+    adrAkun q = L.first;
+    adrAkun p = nullptr;
+    int maxx = -1;
+    adrAkun z=panjangNama(L);
+    int max = lengthAkun(z);
+
+
+    while (q != nullptr){
+        int panjang = lengthAkun(q);
+        if (panjang >=maxx){
+            maxx = panjang;
+            p = q;
+            if(maxx == max ){
+            cout<<p->info.nama<<endl;
+            }
+        }
+        q = q->next;
+    }
+
+//anjan,kakakakng,sana,acengkek
+}
+
+void tampilPendekNama(listAkun L){
     adrAkun q = L.first;
     adrAkun p = nullptr;
 
     adrAkun z = panjangNama(L);
     int minn = lengthAkun(z);
-
+//2,8,14,2,
     while (q != nullptr){
         int pendek = lengthAkun(q);
-        if (pendek < minn){
+        if (pendek <= minn ){
             minn = pendek;
             p = q;
+            cout<< p->info.nama << endl;
         }
+
         q = q->next;
+
     }
-    cout<< p->info.nama << endl;
+//andi,acang,beni
+
 
 }
 

@@ -37,7 +37,7 @@ bool isEmptyAkun(listAkun L);
 bool isEmptyStatus(adrAkun p);
 adrAkun createElemenAkun(string namaAkun,string bio,string email);
 adrStatus createElemenStatus(string status);
-void addAkun(listAkun &L,adrAkun p);
+void insertSortedAkunByNama(listAkun &L,adrAkun p);
 void addStatus(adrAkun p,adrStatus q);
 adrAkun searchAkunByNama(listAkun L,string namaAkun);
 adrAkun searchAkunByEmail(listAkun L,string email);
@@ -47,15 +47,20 @@ void deleteAfterAkun(adrAkun prec, adrAkun &p);
 void deleteLastAkun(listAkun &L, adrAkun &p);
 void deleteAkunByNama(listAkun &L,string x);
 void deleteBio(adrAkun p);
-void deleteStatusByOption(adrAkun &p, string &x);
+void deleteStatusByOption(adrAkun p, string x);
+void updateBio(adrAkun p,string bioBaru);
+void updateEmail(adrAkun p,string emailBaru);
 int countAkun(listAkun L);
-void viewAkunHuruf(listAkun L, string x);
+void viewAkunHuruf(listAkun L, char x);
 int countStatus(adrAkun p);
 void tampilAkunDenganJumlahStatusTertentu(listAkun L,int jStatus);
 void viewAllAkun(listAkun L);
+void viewAkunTertentu(listAkun L,adrAkun p);
+int counterString(string username);
 int lengthAkun(adrAkun q);
-adrAkun panjangNama();
-void pendekNama();
+adrAkun panjangNama(listAkun L);
+void tampilPanjangNama(listAkun L);
+void tampilPendekNama(listAkun L);
 
 
 
