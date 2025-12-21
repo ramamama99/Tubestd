@@ -48,7 +48,9 @@ int main()
     if (pilih>=1 && pilih <=11){
 
       switch(pilih){
-        case 1:
+        case 1:{
+            bool keluar = false;
+            while(!keluar){
             int case_1;
             cout<<"\nApa yang akan ingin anda lakukan terhadap pengelolaan akun?"<<endl;
             cout<<"1.Registrasi\n2.Update Bio\n3.Update Email\n4.Tambah Status\n5.Batal"<< endl;
@@ -64,8 +66,12 @@ int main()
                     cout <<"ketentuan registrasi\n";
                     cout <<"------------------------\n";
                     cout <<"Nama akun wajib lebih dari 5 karakter\n";
-                    cout <<"Masukkan username: ";
+                    cout <<"Masukkan username(input 'cancel' untuk membatalkan): ";
                     cin>>username;
+                    if (username == "cancel"){
+                        break;
+                    }
+
                     n = searchAkunByNama(L,username);
                     int c = counterString(username);
 
@@ -81,10 +87,16 @@ int main()
                     } else if (cekNama != true){
                         cout <<"ganti nama lain";
                     } else {
-                        cout << "masukan email untuk akun anda: ";
+                        cout << "masukan email untuk akun anda(input 'cancel' untuk membatalkan): ";
                         cin >> email;
-                        cout << "masukan bio untuk akun anda (jika tidak ingin menambahkan, silahkan input '-'.): ";
+                        if(email == "cancel"){
+                            break;
+                        }
+                        cout << "masukan bio untuk akun anda \n(jika tidak ingin menambahkan, silahkan input '-' dan 'cancel' jika ingin membatalkan.): ";
                         cin >> bio;
+                        if(bio == "cancel"){
+                            break;
+                        }
 
                         adk = createElemenAkun(username,bio,email);
                         insertSortedAkunByNama(L,adk);
@@ -98,116 +110,201 @@ int main()
                 }
                 break;
 
-
             }case 2:
-                cout << "Masukkan username: ";
+                cout << "Masukkan username(input 'cancel' untuk membatalkan): ";
                 cin >> username;
+                if(username == "cancel"){
+                    break;
+                }
                 p = searchAkunByNama(L,username);
 
                 if (p!= nullptr){
                     cout<<"Silahkan masukkan bio yang baru: ";
                     cin >> bio;
+                    if(bio == "cancel"){
+                        break;
+                    }
                     updateBio(searchAkunByNama(L, username),bio);
                 }else{
                     cout<<"Akun dengan username "<<username<<" tidak ditemukan";
                 }
                 break;
             case 3:
-                cout << "Masukkan username: ";
+                cout << "Masukkan username(input 'cancel' untuk membatalkan): ";
                 cin >> username;
+                if(username == "cancel"){
+                    break;
+                }
                 p = searchAkunByNama(L,username);
 
-                if(q!=nullptr){
+                if(p!=nullptr){
                     cout<<"Silahkan masukkan email yang baru: ";
                     cin >> email;
+                    if(email == "cancel"){
+                        break;
+                    }
                     updateEmail(p,email);
                 }else{
                     cout<<"Akun dengan username "<<username<<" tidak ditemukan";
                 }
                 break;
             case 4:
-                cout << "Masukkan username: ";
+                cout << "Masukkan username(input 'cancel' untuk membatalkan): ";
                 cin >> username;
+                if(username == "cancel"){
+                    break;
+                }
                 p = searchAkunByNama(L,username);
 
                 if(p!=nullptr){
                     cout<<"Silahkan masukkan status yang baru: ";
                     cin >> status;
+                    if(status == "cancel"){
+                        break;
+                    }
                     q = createElemenStatus(status);
                     addStatus(p,q);
+                    cout<<"akun berhasil ditambahkan";
                 }else{
                     cout<<"Akun dengan username "<<username<<" tidak ditemukan";
                 }
                 break;
 
+            case 5:
+                keluar = true;
+                continue;
 
             default:
-            break;
+                cout<<"Pilihan tidak valid\n";
+                continue;
+            }
+            char lanjut;
+            cout << "\nLanjut kelola akun? (y/n): ";
+            cin >> lanjut;
 
+            if (lanjut == 'n' || lanjut == 'N') {
+                keluar = true;
 
             }
+            }
             break;
+
+            }
         case 2:
+            cout<<"--------------------------------------------"<<endl;
             viewAllAkun(L);
             break;
 
         case 3:{
-
+            bool keluar = false;
             int nomor;
-            string nama;
-            string Email;
-            string Status;
 
-            cout<<"Mau cari akun berdasarkan apa? (1.Nama/2.Email/3.Status)";
+            while(!keluar){
+            cout<<"Mau cari akun berdasarkan apa?\n1.Nama\n2.Email\n3.Status\n4.Batal"<<endl;
             cout << "Silahkan input nomor pilihan: ";
             cin >> nomor;
             switch(nomor){
             case 1:
-                cout << "Masukkan nama yang ingin dicari: ";
-                cin >> nama;
-                hasil = searchAkunByNama(L, nama);
+                cout << "Masukkan nama yang ingin dicari(input 'cancel' untuk membatalkan): ";
+                cin >> username;
+                if(username == "cancel"){
+                    break;
+                }
+                hasil = searchAkunByNama(L, username);
+                if(hasil!=nullptr){
                 viewAkunTertentu(L,hasil);
+                }else{
+                cout<<"Akun tidak ditemukan"<<endl;
+                }
                 break;
             case 2:
-                cout << "Masukkan email yang ingin dicari: ";
-                cin >> Email;
-                hasil = searchAkunByEmail(L, Email);
-                viewAkunTertentu(L,hasil);
+                cout << "Masukkan email yang ingin dicari(input 'cancel' untuk membatalkan): ";
+                cin >> email;
+                if(email == "cancel"){
+                    break;
+                }
+                searchAkunByEmail(L, email);
                 break;
 
             case 3:
-                cout << "Masukkan Status yang ingin dicari: ";
-                cin >> Status;
-                searchAllAkunByStatus(L, Status);
+                cout << "Masukkan Status yang ingin dicari(input 'cancel' untuk membatalkan): ";
+                cin >> status;
+                if(status == "cancel"){
+                    break;
+                }
+                searchAllAkunByStatus(L, status);
                 break;
+            case 4:
+                keluar = true;
+                continue;
+
+            default:
+                cout<<"Pilihan tidak valid\n";
+                continue;
+            }
+            char lanjut;
+            cout << "\nLanjut Searching? (y/n): ";
+            cin >> lanjut;
+
+            if (lanjut == 'n' || lanjut == 'N') {
+                keluar = true;
+
             }
 
-            break;
+
+        }
+        break;
         }
         case 4:
-            cout<<"Silahkan Masukkan Nama akun yang ingin dihapus: ";
+            cout<<"Silahkan Masukkan Nama akun yang ingin dihapus(input 'cancel' untuk membatalkan): ";
             cin >> username;
+            if(username == "cancel"){
+                break;
+            }
             deleteAkunByNama(L, username);
 
             break;
         case 5:
-            cout<<"Silahkan Masukkan Nama akun: ";
+            cout<<"Silahkan Masukkan Nama akun(input 'cancel' untuk membatalkan): ";
             cin >> username;
+            if (username == "cancel"){
+                break;
+            }
             hasil = searchAkunByNama(L, username);
+
+            if(hasil!=nullptr){
             deleteBio(hasil);
-            cout<<"Bio berhasil dihapus";
+
+            }else{
+                cout<<"Akun tidak ditemukan";
+            }
 
             //menghapus bio
 
             break;
         case 6:
-            cout<<"Silahkan Masukkan Nama akun: ";
+            cout<<"Silahkan Masukkan Nama akun(input 'cancel' untuk membatalkan): ";
             cin >> username;
-            cout<<"Silahkan Masukkan status yang ingin dihapus: ";
-            cin >> status;
+            if(username== "cancel"){
+                break;
+            }
             hasil = searchAkunByNama(L, username);
-            deleteStatusByOption(hasil, status);
 
+            if(hasil!=nullptr){
+                q = hasil->firstStatus;
+                if(q != nullptr){
+                    cout<<"Silahkan Masukkan status yang ingin dihapus(input 'cancel' untuk membatalkan): ";
+                    cin >> status;
+                    if(status == "cancel"){
+                        break;
+                    }
+                    deleteStatusByOption(hasil, status);
+                }else{
+                    cout<<"Akun ini tidak memiliki status";
+                }
+            }else{
+                cout<<"Akun tidak ditemukan";
+            }
             //hapus status
             break;
         case 7:
@@ -219,14 +316,25 @@ int main()
             break;
         case 8:
             char huruf;
+            cout<<"input ! untuk membatalkan"<<endl;
             cout<<"Silahkan input huruf pertama: ";
             cin>>huruf;
+            if(huruf == '!'){
+                break;
+            }
+            cout<<"\nAkun yang diawali huruf "<<huruf<<endl;
+            cout<<"--------------------------------------------"<<endl;
             viewAkunHuruf(L,huruf);
+
             break;
         case 9:
             int jStatus;
+            cout<<"input -1 untuk membatalkan"<<endl;
             cout<<"Silahkan input jumlah status: ";
             cin>>jStatus;
+            if(jStatus == -1){
+                break;
+            }
             tampilAkunDenganJumlahStatusTertentu(L,jStatus);
             break;
         case 10:
@@ -236,7 +344,6 @@ int main()
         case 11:
             cout<<"Akun dengan Username terpendek:\n";
             tampilPendekNama(L);
-            //menampilkan akun dengan nama akun terpendek
             break;
         default:
             break;
@@ -247,6 +354,16 @@ int main()
     }else{
     cout<<"Pilihan tidak valid";
     }
+
+    char lanjut;
+    cout << "\nLanjut Eksplorasi? (y/n): ";
+    cin >> lanjut;
+
+    if (lanjut == 'n') {
+        break;
+    }
+
+
 
     }
 

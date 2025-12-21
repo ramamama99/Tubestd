@@ -40,7 +40,7 @@ adrStatus createElemenStatus(string status);
 void insertSortedAkunByNama(listAkun &L,adrAkun p);
 void addStatus(adrAkun p,adrStatus q);
 adrAkun searchAkunByNama(listAkun L,string namaAkun);
-adrAkun searchAkunByEmail(listAkun L,string email);
+void searchAkunByEmail(listAkun L,string email);
 void searchAllAkunByStatus(listAkun L, string status);
 void deleteFirstAkun(listAkun &L, adrAkun &p);
 void deleteAfterAkun(adrAkun prec, adrAkun &p);
