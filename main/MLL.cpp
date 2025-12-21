@@ -294,8 +294,9 @@ void viewAkunHuruf(listAkun L, char x){
             counter = counter+1 ;
         }
         p = p-> next;
-        cout << counter;
+
     }
+      cout << counter;
 }
 
 int countStatus(adrAkun p){
@@ -311,10 +312,18 @@ int countStatus(adrAkun p){
     }
 
 void viewAkunTertentu(listAkun L,adrAkun p){
-    cout << "-------------------";
-    cout << p->info.nama;
-    cout << p->info.email;
-    cout << p->info.bio;
+    adrStatus s = p->firstStatus;
+    cout << "-------------------\n";
+    cout <<"Username: "<< p->info.nama<<endl;
+    cout << "Email: "<<p->info.email<<endl;
+    cout << "Bio: "<<p->info.bio<<endl;
+    if(s == nullptr){
+        cout<<"Status : " << " "<<endl;
+    }
+    while(s!=nullptr){
+        cout <<"Status : " <<s->info<<endl;
+        s = s->next;
+    }
     cout << "-------------------";
 }
 
@@ -360,7 +369,6 @@ void viewAllAkun(listAkun L){
             cout <<"Status : " <<s->info<<endl;
             s = s->next;
         }
-        cout<< " "<<endl;
         cout<<"--------------------------------------------"<<endl;
         p = p->next;
     }
