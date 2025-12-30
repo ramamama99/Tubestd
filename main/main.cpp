@@ -15,6 +15,7 @@ int main()
     string status;
 
 
+
     adrAkun s1 = createElemenAkun("Andi_01","Suka Belajar","Andiandiandi@gmail.com");
     adrAkun s2 = createElemenAkun("Beni_02","Suka Musik","MasBeni@gmail.com");
     adrAkun s3 = createElemenAkun("Cahya_03","Atlet Renang","Cahyaswimmer@gmail.com");
@@ -310,20 +311,22 @@ int main()
         case 7:
             int total;
             total = countAkun(L);
+            if(total == 0){
+                cout<<"List Akun Kosong"<<endl;
+            }else{
             cout<<"Terdapat "<<total<<" Akun pada Manajemen Akun"<<endl;
-            //hitung banyak akun
+            }
 
             break;
         case 8:
             char huruf;
-            cout<<"input ! untuk membatalkan"<<endl;
+            cout<<"input '!' untuk membatalkan"<<endl;
             cout<<"Silahkan input huruf pertama: ";
             cin>>huruf;
             if(huruf == '!'){
                 break;
             }
-            cout<<"\nAkun yang diawali huruf "<<huruf<<endl;
-            cout<<"--------------------------------------------"<<endl;
+
             viewAkunHuruf(L,huruf);
 
             break;

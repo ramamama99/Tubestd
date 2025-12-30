@@ -326,9 +326,13 @@ int countAkun(listAkun L){
 }
 
 void viewAkunHuruf(listAkun L, char x){
+    if(L.first == nullptr){
+        cout<<"List Akun Kosong"<<endl;
+    }else{
     adrAkun p = L.first;
     adrStatus s;
     int counter = 0;
+
     while (p != nullptr){
         if (lowercase(p->info.nama[0]) == lowercase(x)){
             s = p->firstStatus;
@@ -356,6 +360,7 @@ void viewAkunHuruf(listAkun L, char x){
         cout<<"Tidak ada akun yang diawali huruf "<<x<<endl;
     }else{
       cout <<"Total akun yang diawali huruf "<<x<<" ada "<< counter<<" akun"<<endl;
+    }
     }
 }
 
@@ -389,6 +394,12 @@ void viewAkunTertentu(listAkun L,adrAkun p){
 
 
 void tampilAkunDenganJumlahStatusTertentu(listAkun L,int jStatus){
+    if(L.first == nullptr){
+        cout<<"List Akun Kosong"<<endl;
+    }else{
+
+
+
     adrAkun p = L.first;
     int count;
     bool ketemu = false;
@@ -425,7 +436,7 @@ void tampilAkunDenganJumlahStatusTertentu(listAkun L,int jStatus){
       if(!ketemu){
         cout<<"Tidak ada akun dengan jumlah status "<<jStatus<<endl;
       }
-
+    }
 
 }
 
@@ -467,13 +478,17 @@ int counterString(string username){
 }
 
 int lengthAkun(adrAkun q){
-    int panjang;
-    string nama = q->info.nama;
-    panjang = nama.length();
-    return panjang;
+    if (q == nullptr) {
+        return -1;
+    }
+    return q->info.nama.length();
 }
 
 adrAkun panjangNama(listAkun L){
+    if (L.first == nullptr){
+        return nullptr;
+    }
+
     adrAkun q = L.first;
     adrAkun p = nullptr;
     int maxx = -1;
@@ -488,86 +503,82 @@ adrAkun panjangNama(listAkun L){
     }
     return p;
 }
-
 void tampilPanjangNama(listAkun L){
-    adrAkun q = L.first;
-    adrAkun p = nullptr;
-    int maxx = -1;
-    adrAkun z=panjangNama(L);
-    int max = lengthAkun(z);
-    adrStatus s;
-    cout<<"--------------------------------------------"<<endl;
-    while (q != nullptr){
+    if (L.first == nullptr){
+        cout<<"List Akun Kosong"<<endl;
+    } else {
+        adrAkun q = L.first;
+        adrAkun p = nullptr;
+        int maxx = -1;
+        adrAkun z = panjangNama(L);
+        int max = lengthAkun(z);
+        adrStatus s;
 
-        int panjang = lengthAkun(q);
-        if (panjang >=maxx){
-            maxx = panjang;
-            p = q;
-            if(maxx == max ){
-              s = p->firstStatus;
-              cout<<"Username: "<<p->info.nama<<endl;
-              cout<<"Email: "<<p->info.email<<endl;
-              if(p->info.bio == "-"){
-               cout<<"Bio : " << " "<<endl;
-              }else{
-               cout<<"Bio : " << p->info.bio<<endl;
-              }
-              if(s == nullptr){
-               cout<<"Status : " << " "<<endl;
-              }
-              while(s!=nullptr){
-               cout <<"Status : " <<s->info<<endl;
-               s = s->next;
-              }
-            cout<<"--------------------------------------------"<<endl;
+        cout<<"--------------------------------------------"<<endl;
+        while (q != nullptr){
+            int panjang = lengthAkun(q);
+            if (panjang >= maxx){
+                maxx = panjang;
+                p = q;
+                if (maxx == max){
+                    s = p->firstStatus;
+                    cout<<"Username: "<<p->info.nama<<endl;
+                    cout<<"Email: "<<p->info.email<<endl;
+                    if(p->info.bio == "-"){
+                        cout<<"Bio : "<<endl;
+                    }else{
+                        cout<<"Bio : "<<p->info.bio<<endl;
+                    }
+                    if(s == nullptr){
+                        cout<<"Status : "<<endl;
+                    }
+                    while(s!=nullptr){
+                        cout <<"Status : "<<s->info<<endl;
+                        s = s->next;
+                    }
+                    cout<<"--------------------------------------------"<<endl;
+                }
             }
+            q = q->next;
         }
-
-        q = q->next;
     }
-
-//anjan,kakakakng,sana,acengkek
 }
 
 void tampilPendekNama(listAkun L){
-    adrAkun q = L.first;
-    adrAkun p = nullptr;
-    adrStatus s;
-    adrAkun z = panjangNama(L);
-    int minn = lengthAkun(z);
+    if (L.first == nullptr){
+        cout<<"List Akun Kosong"<<endl;
+    } else {
+        adrAkun q = L.first;
+        adrAkun p = nullptr;
+        adrStatus s;
+        adrAkun z = panjangNama(L);
+        int minn = lengthAkun(z);
 
-    cout<<"--------------------------------------------"<<endl;
-    while (q != nullptr){
-        int pendek = lengthAkun(q);
-        if (pendek <= minn ){
-            minn = pendek;
-            p = q;
-            s = p->firstStatus;
+        cout<<"--------------------------------------------"<<endl;
+        while (q != nullptr){
+            int pendek = lengthAkun(q);
+            if (pendek <= minn){
+                minn = pendek;
+                p = q;
+                s = p->firstStatus;
 
-            cout<<"Username: "<<p->info.nama<<endl;
-            cout<<"Email: "<<p->info.email<<endl;
-            if(p->info.bio == "-"){
-             cout<<"Bio : " << " "<<endl;
-            }else{
-             cout<<"Bio : " << p->info.bio<<endl;
+                cout<<"Username: "<<p->info.nama<<endl;
+                cout<<"Email: "<<p->info.email<<endl;
+                if(p->info.bio == "-"){
+                    cout<<"Bio : "<<endl;
+                }else{
+                    cout<<"Bio : "<<p->info.bio<<endl;
+                }
+                if(s == nullptr){
+                    cout<<"Status : "<<endl;
+                }
+                while(s!=nullptr){
+                    cout <<"Status : "<<s->info<<endl;
+                    s = s->next;
+                }
+                cout<<"--------------------------------------------"<<endl;
             }
-            if(s == nullptr){
-             cout<<"Status : " << " "<<endl;
-            }
-            while(s!=nullptr){
-             cout <<"Status : " <<s->info<<endl;
-             s = s->next;
-            }
-           cout<<"--------------------------------------------"<<endl;
+            q = q->next;
         }
-
-        q = q->next;
-
     }
-//andi,acang,beni
-
-
 }
-
-
-
